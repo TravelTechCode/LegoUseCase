@@ -1,9 +1,5 @@
 # LegoUseCase
 
-## 🏗️ Architecture Diagram
-
-![Batch Monitoring Architecture](./batch-monitoring-architecture.png)
-
 ## 📌 End-to-End Process Overview
 
 1. **Fetch Collectors**  
@@ -25,3 +21,8 @@
    A CDS View on top of `ZBATCH_DATA` is used to expose this data, which is visualized in a unified Fiori UI.
 
 ---
+
+## 🏗️ Architecture Diagram
+
+![Batch Monitoring Architecture](./batch-monitoring-architecture.png)
+
