@@ -2,7 +2,7 @@
 
 ## 🏗️ Architecture Diagram
 
-![Batch Monitoring Architecture](./docs/batch-monitoring-architecture.png)
+![Batch Monitoring Architecture](./batch-monitoring-architecture.png)
 
 ## 📌 End-to-End Process Overview
 
