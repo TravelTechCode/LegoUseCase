@@ -54,6 +54,53 @@
 ![Batch Monitoring Architecture](./batch-monitoring-architecture.png)
 
 ---
+# Event-Driven Batch Collector Logging from SAP ECC to AWS
+
+## 📘 Overview
+
+To send batch job data entries from the SAP ECC system into an external system (e.g., AWS), using an event-driven approach. 
+
+The ECC system writes to a custom table (`zbatch_data`), and based on this, a trigger logic posts the data to AWS either directly or through SAP Event Mesh.
+
+---
+
+## 🧱 Architecture Diagram
+⚙️ Solution Options
+
+✅ Option A: Direct REST Call to AWS from ECC
+
+🔗 Flow
+New entry is created in `zbatch_data`.
+
+ABAP trigger logic (inside program or custom FM) detects the insert.
+
+ABAP sends a POST request directly to the AWS REST API using CL_HTTP_CLIENT.
+
+✅ Option B: Use SAP Event Mesh for Messaging
+
+🔗 Flow
+Data is inserted in `zbatch_data`.
+
+Trigger logic publishes a message to SAP Event Mesh.
+
+AWS is subscribed to Event Mesh (using a webhookor or API Gateway).
+
+AWS handles the message asynchronously.
+
+🔧 Setup Requirements
+SAP Event Mesh service on BTP
+
+SAP ECC connected via SAP Cloud Connector
+
+Queue/topic configured for messaging
+
+Destination set up in BTP cockpit for ECC to publish
+
+The Add-On SAP NetWeaver, add-on for event enablement (ASANWEE)
+
+🔧 ABAP to Publish Event to Event Mesh
+Use CL_HTTP_CLIENT to call Event Mesh REST API .
+---
 
 ## ⚠️ Error Handling and Failure Points
 
