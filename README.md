@@ -72,9 +72,32 @@ The ECC system writes to a custom table (`zbatch_data`), and based on this, a tr
 🔗 Flow
 New entry is created in `zbatch_data`.
 
-ABAP trigger logic (inside program or custom FM) detects the insert.
-
 ABAP sends a POST request directly to the AWS REST API using CL_HTTP_CLIENT.
+
+Approach 1: Asynchronous Execution with CALL FUNCTION ... STARTING NEW TASK
+
+    Create a Remote-enabled Function Module. within the FM using cl_http_client trigger the call to AWS.
+    Next call the FM 
+    <pre> CALL FUNCTION 'Z_SEND_TO_AWS_ASYNC'
+    STARTING NEW TASK 'AWS_SEND'
+    DESTINATION 'NONE' </pre>
+    
+Approach 2 :
+
+   Create a Remote-enabled Function Module. within the FM using cl_http_client trigger the call to AWS.
+   Create bgRFC Destination.
+   Call the FM via CALL FUNCTION IN BACKGROUND UNIT
+
+   <pre> CALL FUNCTION 'Z_SEND_TO_AWS_BGRFC' IN BACKGROUND UNIT lv_unit
+  DESTINATION INBOUND 'Z_AWS_LOGGING'
+  EXPORTING
+    iv_job_id     = lv_job_id
+    iv_status     = lv_status
+    iv_timestamp  = lv_timestamp
+    iv_message    = lv_message. </pre>
+
+Key Benefits of bgRFC over STARTING NEW TASK is the bgRFC has inbuilt retry mechanism.
+
 
 ✅ Option B: Use SAP Event Mesh for Messaging
 
