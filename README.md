@@ -123,6 +123,11 @@ The Add-On SAP NetWeaver, add-on for event enablement (ASANWEE)
 
 🔧 ABAP to Publish Event to Event Mesh
 Use CL_HTTP_CLIENT to call Event Mesh REST API .
+
+---
+
+✅ Fiori with SAP ECC – Overview
+
 ---
 
 ## ⚠️ Error Handling and Failure Points
