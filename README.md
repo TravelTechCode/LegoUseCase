@@ -126,7 +126,78 @@ Use CL_HTTP_CLIENT to call Event Mesh REST API .
 
 ---
 
-✅ Fiori with SAP ECC – Overview
+📱 Fiori App Design
+
+To visualize SAP ECC Batch Job Collector data, where entries are stored as JSON payloads in a backend table (e.g., zbatch_data). 
+The app reads this data and dynamically renders a table UI with headers and values based on the keys and structure of each JSON.
+
+This approach ensures flexibility in presenting tabular data where structure can vary across scenarios.
+
+
+---
+
+🧱 Architecture Overview
+
+Layer	       &nbsp;&nbsp;&nbsp;&nbsp; Technology
+
+Frontend     &nbsp;&nbsp;&nbsp;&nbsp; SAPUI5 / Fiori freestyle 
+
+Backend      &nbsp;&nbsp;&nbsp;&nbsp; SAP Gateway (ECC OData)
+
+Integration	 &nbsp;&nbsp;&nbsp;&nbsp; OData service or BTP CAP app proxying to ECC
+
+Data Source  &nbsp;&nbsp;&nbsp;&nbsp; ECC Table ZBATCHCOLLECTOR_DATA storing JSON payloads
+
+---
+
+🖥️ Fiori App UI Structure
+
+Fiori Elements App (List Report + Object Page)
+
+**List Report Page** <br>
+
+Filters: Collector, Status, Date Range
+
+Table: Shows summary (collector, job name, record count, status)
+
+Navigation to detail page<br>
+
+**Object Page** <br>
+
+Header: Collector + Job spool data
+
+Section: Parsed JSON as dynamically rendered table based on the json structure.   
+
+Use a manually constructed sap.m.Table where:
+
+Dynamically generate table columns and rows based on the JSON keys and values.
+
+This approach gives full flexibility when the JSON payload has a variable structure.
+
+🔧 Steps:
+
+Parse the JSON payload from the backend.
+
+Dynamically extract keys and generate columns.
+
+Bind the payload to a JSONModel.
+
+```` const jsonData = <your payload>; // e.g., from backend
+const keys = Object.keys(jsonData[0]);
+
+keys.forEach(key => {
+  oTable.addColumn(new sap.m.Column({
+    header: new sap.m.Label({ text: key })
+  }));
+});
+
+oTable.bindItems({
+  path: "/",
+  template: new sap.m.ColumnListItem({
+    cells: keys.map(key => new sap.m.Text({ text: `{${key}}` }))
+  })
+});
+````
 
 ---
 
