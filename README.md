@@ -58,10 +58,6 @@
 
 ## 📘 Overview
 
-To send batch job data entries from the SAP ECC system into an external system (e.g., AWS), using an event-driven approach. 
-
-The ECC system writes to a custom table (`zbatch_data`), and based on this, a trigger logic posts the data to AWS either directly or through SAP Event Mesh.
-
 ---
 
 ⚙️ Solution Options
@@ -98,18 +94,24 @@ Approach 2 :
 Key Benefits of bgRFC over STARTING NEW TASK is the bgRFC has inbuilt retry mechanism.
 
 
-✅ Option B: Use SAP Event Mesh for Messaging
+✅ Option B: Raise data event and Use SAP Event Mesh to subscribe 
+
+To send batch job data entries from the SAP ECC system into an external system (e.g., AWS), using an event-driven approach. 
+
+The ECC system writes to a custom table (`zbatch_data`), and a custom event is raised. This custom event is registerd as an outbound topic to event mesh.
 
 🔗 Flow
+
 Data is inserted in `zbatch_data`.
 
-Topic subscription on creation of entries in the custom table.(here the feasibility needs to be checked)
+Raise Event.
 
 AWS is subscribed to the topic(ECC Batch job data) Event Mesh .
 
 AWS handles the message asynchronously.
 
-🔧 Setup Requirements
+🔧 Setup Requirements<br>
+
 SAP Event Mesh service on BTP
 
 SAP ECC connected via SAP Cloud Connector
@@ -120,7 +122,9 @@ Destination set up in BTP cockpit for ECC to publish
 
 The Add-On SAP NetWeaver, add-on for event enablement (ASANWEE)
 
-🔧 ABAP to Publish Event to Event Mesh
+
+🔧 ABAP to Publish Event to Event Mesh<br>
+
 Use CL_HTTP_CLIENT to call Event Mesh REST API .
 
 ---
