@@ -104,9 +104,9 @@ Key Benefits of bgRFC over STARTING NEW TASK is the bgRFC has inbuilt retry mech
 🔗 Flow
 Data is inserted in `zbatch_data`.
 
-Trigger logic publishes a message to SAP Event Mesh.
+Trigger logic publishes a data event to SAP Event Mesh.
 
-AWS is subscribed to Event Mesh (using a webhookor or API Gateway).
+AWS is subscribed to the topic(ECC Batch job data) Event Mesh .
 
 AWS handles the message asynchronously.
 
