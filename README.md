@@ -54,7 +54,7 @@
 ![Batch Monitoring Architecture](./batch-monitoring-architecture.png)
 
 ---
-# Event-Driven Batch Collector Logging from SAP ECC to AWS
+#  Batch Collector Logging from SAP ECC to AWS
 
 ## 📘 Overview
 
@@ -64,7 +64,6 @@ The ECC system writes to a custom table (`zbatch_data`), and based on this, a tr
 
 ---
 
-## 🧱 Architecture Diagram
 ⚙️ Solution Options
 
 ✅ Option A: Direct REST Call to AWS from ECC
@@ -104,7 +103,7 @@ Key Benefits of bgRFC over STARTING NEW TASK is the bgRFC has inbuilt retry mech
 🔗 Flow
 Data is inserted in `zbatch_data`.
 
-Trigger logic publishes a data event to SAP Event Mesh.
+Topic subscription on creation of entries in the custom table.(here the feasibility needs to be checked)
 
 AWS is subscribed to the topic(ECC Batch job data) Event Mesh .
 
